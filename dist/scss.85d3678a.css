@@ -33,39 +33,54 @@
           height: 8px;
           background: #db3aaa; }
   #player .content {
-    height: calc(100vh - 270px); }
-    #player .content .panel-effect .effect {
-      position: relative;
+    height: calc(100vh - 270px);
+    width: 200vw;
+    display: flex;
+    transition: transform 0.3s;
+    align-items: center; }
+    #player .content.panel1 {
+      transform: translate(0vw); }
+    #player .content.panel2 {
+      transform: translate(-100vw); }
+    #player .content .panel-effect {
+      width: 100vw;
+      height: 100%;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 40vh; }
-      #player .content .panel-effect .effect > div {
-        background-size: contain;
-        position: absolute; }
-      #player .content .panel-effect .effect .effect-1 {
-        background: url("effect-no-move.38908003.svg") 0 0 no-repeat;
-        width: 70vw;
-        height: 70vw;
-        animation: rotate 20s linear infinite; }
-      #player .content .panel-effect .effect .effect-2 {
-        background: url("effect-move1.26409602.svg") 0 0 no-repeat;
-        width: 60vw;
-        height: 60vw;
-        animation: rotate 10s linear infinite reverse; }
-      #player .content .panel-effect .effect .effect-3 {
-        background: url("effect-move2.ffaae7d6.svg") 0 0 no-repeat;
-        width: 24vw;
-        height: 24vw;
-        animation: rotate 10s linear infinite; }
-    #player .content .panel-effect .lyrics {
-      text-align: center; }
-      #player .content .panel-effect .lyrics p {
-        color: #868aaf;
-        font-size: 13px;
-        margin-top: 10px; }
-        #player .content .panel-effect .lyrics p.current {
-          color: #fff; }
+      flex-direction: column;
+      justify-content: center; }
+      #player .content .panel-effect .effect {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40vh;
+        width: 100%; }
+        #player .content .panel-effect .effect > div {
+          background-size: contain;
+          position: absolute; }
+        #player .content .panel-effect .effect .effect-1 {
+          background: url("effect-no-move.38908003.svg") 0 0 no-repeat;
+          width: 70vw;
+          height: 70vw;
+          animation: rotate 20s linear infinite; }
+        #player .content .panel-effect .effect .effect-2 {
+          background: url("effect-move1.26409602.svg") 0 0 no-repeat;
+          width: 60vw;
+          height: 60vw;
+          animation: rotate 10s linear infinite reverse; }
+        #player .content .panel-effect .effect .effect-3 {
+          background: url("effect-move2.ffaae7d6.svg") 0 0 no-repeat;
+          width: 24vw;
+          height: 24vw;
+          animation: rotate 10s linear infinite; }
+      #player .content .panel-effect .lyrics {
+        text-align: center; }
+        #player .content .panel-effect .lyrics p {
+          color: #868aaf;
+          font-size: 13px;
+          margin-top: 10px; }
+          #player .content .panel-effect .lyrics p.current {
+            color: #fff; }
   #player .footer {
     height: 160px; }
     #player .footer .button {
