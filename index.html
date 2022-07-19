@@ -9,7 +9,72 @@
     <link rel="stylesheet" href="./src/scss/index.scss">
 </head>
 <body>
-  <div>音乐人</div>
-  <script src="./src/javascript/index.js"></script>
+<div id="player">
+    <div class="header">
+        <h1>人这一辈子</h1>
+        <p>五月天</p>
+        <div class="balls">
+            <span class='current'></span>
+            <span></span>
+        </div>
+    </div>
+    <main class="content">
+        <div class="panel-effect">
+            <div class="effect">
+                <div class="effect-1"></div>
+                <div class="effect-2"></div>
+                <div class="effect-3"></div>
+            </div>
+            <div class="lyrics">
+                <p class="current">那么你和人们的不同 就看你怎么活</p>
+                <p>想象你的白发 紧贴着你的轮廓</p>
+            </div>
+        </div>
+        <div class="panel-lyrics"></div>
+    </main>
+    <footer class="footer">
+        <div class="button">
+            <svg>
+                <use xlink:href="#icon-like"></use>
+            </svg>
+            <svg>
+                <use xlink:href="#icon-download"></use>
+            </svg>
+            <svg>
+                <use xlink:href="#icon-share"></use>
+            </svg>
+            <svg>
+                <use xlink:href="#icon-comment"></use>
+            </svg>
+        </div>
+        <div class="area-bar">
+            <span class="time-start">00:00</span>
+            <span class="time-end">00:00</span>
+            <div class="bar">
+                <div class="progress"></div>
+            </div>
+        </div>
+        <div class="action">
+            <svg class="btn-order">
+                <use xlink:href="#icon-circle"></use>
+            </svg>
+            <svg class="btn-pre">
+                <use xlink:href="#icon-pre"></use>
+            </svg>
+            <svg class="btn-play-pause">
+                <use xlink:href="#icon-pause"></use>
+            </svg>
+            <svg class="btn-next">
+                <use xlink:href="#icon-next"></use>
+            </svg>
+            <svg class="btn-music-list">
+                <use xlink:href="#icon-list"></use>
+            </svg>
+        </div>
+    </footer>
+</div>
+<script src="./src/javascript/index.js"></script>
+</svg>
+
 </body>
 </html>

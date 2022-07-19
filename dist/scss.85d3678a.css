@@ -1,2 +1,130 @@
-div {
-  color: red; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+#player {
+  background-color: #060a3d;
+  height: 100vh; }
+  #player .header {
+    text-align: center;
+    height: 110px; }
+    #player .header h1 {
+      color: #fff;
+      font-size: 20px;
+      padding-top: 20px; }
+    #player .header p {
+      color: #868aaf;
+      font-size: 12px; }
+    #player .header .balls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px; }
+      #player .header .balls span {
+        display: block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #69134f;
+        margin: 0 4px; }
+        #player .header .balls span.current {
+          width: 8px;
+          height: 8px;
+          background: #db3aaa; }
+  #player .content {
+    height: calc(100vh - 270px); }
+    #player .content .panel-effect .effect {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40vh; }
+      #player .content .panel-effect .effect > div {
+        background-size: contain;
+        position: absolute; }
+      #player .content .panel-effect .effect .effect-1 {
+        background: url("effect-no-move.38908003.svg") 0 0 no-repeat;
+        width: 70vw;
+        height: 70vw;
+        animation: rotate 20s linear infinite; }
+      #player .content .panel-effect .effect .effect-2 {
+        background: url("effect-move1.26409602.svg") 0 0 no-repeat;
+        width: 60vw;
+        height: 60vw;
+        animation: rotate 10s linear infinite reverse; }
+      #player .content .panel-effect .effect .effect-3 {
+        background: url("effect-move2.ffaae7d6.svg") 0 0 no-repeat;
+        width: 24vw;
+        height: 24vw;
+        animation: rotate 10s linear infinite; }
+    #player .content .panel-effect .lyrics {
+      text-align: center; }
+      #player .content .panel-effect .lyrics p {
+        color: #868aaf;
+        font-size: 13px;
+        margin-top: 10px; }
+        #player .content .panel-effect .lyrics p.current {
+          color: #fff; }
+  #player .footer {
+    height: 160px; }
+    #player .footer .button {
+      display: flex;
+      justify-content: center; }
+      #player .footer .button svg {
+        width: 24px;
+        height: 24px;
+        margin: 0 20px; }
+    #player .footer .area-bar {
+      color: #fff;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      margin-top: 20px; }
+      #player .footer .area-bar .time-start {
+        order: 1; }
+      #player .footer .area-bar .time-end {
+        order: 3; }
+      #player .footer .area-bar .bar {
+        order: 2;
+        flex: 1;
+        height: 4px;
+        background: #0025f1;
+        border-radius: 0 10px;
+        margin: 0 10px;
+        position: relative; }
+        #player .footer .area-bar .bar .progress {
+          width: 30%;
+          height: 100%;
+          border-radius: 2px;
+          background: #db3aaa;
+          position: relative; }
+          #player .footer .area-bar .bar .progress::after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            top: -7px;
+            width: 16px;
+            height: 16px;
+            background: url("progress.553c693d.svg") 0 0 no-repeat;
+            background-size: contain; }
+    #player .footer .action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 0 20px; }
+      #player .footer .action svg {
+        width: 28px;
+        height: 28px; }
+        #player .footer .action svg.btn-play-pause {
+          width: 50px;
+          height: 50px; }
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0); }
+  100% {
+    transform: rotate(360deg); } }

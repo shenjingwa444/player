@@ -169,7 +169,7 @@ module.exports = reloadCSS;
 var reloadCSS = require('_css_loader');
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\css-loader.js"}],"..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
+},{"./..\\svg\\effect-no-move.svg":[["effect-no-move.38908003.svg","src\\svg\\effect-no-move.svg"],"src\\svg\\effect-no-move.svg"],"./..\\svg\\effect-move1.svg":[["effect-move1.26409602.svg","src\\svg\\effect-move1.svg"],"src\\svg\\effect-move1.svg"],"./..\\svg\\effect-move2.svg":[["effect-move2.ffaae7d6.svg","src\\svg\\effect-move2.svg"],"src\\svg\\effect-move2.svg"],"./..\\svg\\progress.svg":[["progress.553c693d.svg","src\\svg\\progress.svg"],"src\\svg\\progress.svg"],"_css_loader":"..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\css-loader.js"}],"..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
