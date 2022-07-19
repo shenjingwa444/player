@@ -115,7 +115,62 @@ svgPlaceholder.innerHTML = "\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg s
 },{}],"src\\javascript\\index.js":[function(require,module,exports) {
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 require('./icons');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var $ = function $(selector) {
+  return document.querySelector(selector);
+};
+var $$ = function $$(selector) {
+  return document.querySelectorAll(selector);
+};
+
+var Player = function () {
+  function Player(node) {
+    _classCallCheck(this, Player);
+
+    this.root = typeof node === 'string' ? $(node) : node;
+    this.songList = [];
+    this.currentIndex = 0;
+    this.audio = new Audio();
+    this.start();
+    this.bind();
+  }
+
+  _createClass(Player, [{
+    key: 'start',
+    value: function start() {
+      var _this = this;
+
+      fetch('https://jirengu.github.io/data-mock/huawei-music/music-list.json').then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        _this.songList = data;
+      });
+    }
+  }, {
+    key: 'bind',
+    value: function bind() {
+      var self = this;
+      this.root.querySelector('.btn-play-pause').onclick = function () {
+        self.playSong();
+      };
+    }
+  }, {
+    key: 'playSong',
+    value: function playSong() {
+      this.audio.src = this.songList[this.currentIndex].url;
+      this.audio.play();
+    }
+  }]);
+
+  return Player;
+}();
+
+new Player('#player');
 },{"./icons":"src\\javascript\\icons.js"}],"..\\..\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

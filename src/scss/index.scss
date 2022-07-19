@@ -58,22 +58,24 @@ $color3: #0025f1;
     height: calc(100vh - 270px);
     width: 200vw;
     display: flex;
-    transition:transform 0.3s;
-    align-items:center;
+    transition: transform 0.3s;
+    align-items: center;
 
-    &.panel1{
-      transform:translate(0vw)
+    &.panel1 {
+      transform: translate(0vw)
     }
 
-    &.panel2{
-      transform:translate(-100vw)
+    &.panel2 {
+      transform: translate(-100vw)
     }
+
     .panel-effect {
       width: 100vw;
       height: 100%;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
       .effect {
         position: relative;
         display: flex;
