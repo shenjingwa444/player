@@ -161,19 +161,46 @@ var Player = function () {
           self.audio.pause();
           this.classList.remove("play");
           this.classList.add("pause");
-          this.querySelector("use").setAttribute("xlink:href", "#icon-pause");
+          this.querySelector("use").setAttribute("xlink:href", "#icon-play");
         } else if (this.classList.contains("pause")) {
           this.classList.remove("pause");
           this.classList.add("play");
-          this.querySelector("use").setAttribute("xlink:href", "#icon-play");
+          this.querySelector("use").setAttribute("xlink:href", "#icon-pause");
           self.audio.play();
         }
       };
+
+      this.root.querySelector('.btn-pre').onclick = function () {
+        self.playPrevSong();
+      };
+
+      this.root.querySelector('.btn-next').onclick = function () {
+        self.playNextSong();
+      };
     }
   }, {
-    key: "playSong",
-    value: function playSong() {
-      this.audio.play();
+    key: "playPrevSong",
+    value: function playPrevSong() {
+      var _this2 = this;
+
+      this.currentIndex = (this.currentIndex - 1 + this.songList.length) % this.songList.length;
+      this.audio.src = this.songList[this.currentIndex].url;
+      console.log(this.songList[this.currentIndex]);
+      this.audio.oncanplaythrough = function () {
+        return _this2.audio.play();
+      };
+    }
+  }, {
+    key: "playNextSong",
+    value: function playNextSong() {
+      var _this3 = this;
+
+      this.currentIndex = (this.currentIndex + 1 + this.songList.length) % this.songList.length;
+      this.audio.src = this.songList[this.currentIndex].url;
+      console.log(this.songList[this.currentIndex]);
+      this.audio.oncanplaythrough = function () {
+        return _this3.audio.play();
+      };
     }
   }]);
 

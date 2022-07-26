@@ -29,18 +29,36 @@ class Player {
         self.audio.pause()
         this.classList.remove("play")
         this.classList.add("pause")
-        this.querySelector("use").setAttribute("xlink:href", "#icon-pause")
+        this.querySelector("use").setAttribute("xlink:href", "#icon-play")
       } else if (this.classList.contains("pause")) {
         this.classList.remove("pause")
         this.classList.add("play")
-        this.querySelector("use").setAttribute("xlink:href", "#icon-play")
+        this.querySelector("use").setAttribute("xlink:href", "#icon-pause")
         self.audio.play()
       }
     }
+
+    this.root.querySelector('.btn-pre').onclick = function(){
+      self.playPrevSong()
+    }
+
+    this.root.querySelector('.btn-next').onclick = function(){
+      self.playNextSong()
+    }
   }
 
-  playSong() {
-    this.audio.play()
+  playPrevSong() {
+    this.currentIndex = (this.currentIndex-1+this.songList.length) % this.songList.length
+    this.audio.src = this.songList[this.currentIndex].url
+    console.log(this.songList[this.currentIndex])
+    this.audio.oncanplaythrough = ()=>this.audio.play()
+  }
+
+  playNextSong(){
+    this.currentIndex = (this.currentIndex+1+this.songList.length) % this.songList.length
+    this.audio.src = this.songList[this.currentIndex].url
+    console.log(this.songList[this.currentIndex])
+    this.audio.oncanplaythrough = ()=>this.audio.play()
   }
 }
 
