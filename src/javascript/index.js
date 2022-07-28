@@ -1,5 +1,5 @@
 import "./icons"
-
+import Swiper from './swiper'
 const $ = selector => document.querySelector(selector)
 const $$ = selector => document.querySelectorAll(selector)
 
@@ -14,7 +14,7 @@ class Player {
   }
 
   start() {
-    fetch("https://jirengu.github.io/data-mock/huawei-music/music-list.json")
+   fetch("https://jirengu.github.io/data-mock/huawei-music/music-list.json")
       .then(res => res.json())
       .then(data => {
         this.songList = data
@@ -45,6 +45,16 @@ class Player {
     this.root.querySelector('.btn-next').onclick = function(){
       self.playNextSong()
     }
+
+    let swiper = new Swiper(this.root.querySelector('.panels'))
+    swiper.on('swipLeft',function(){
+      this.classList.remove('panel1')
+      this.classList.add('panel2')
+    })
+    swiper.on('swipRight',function(){
+      this.classList.remove('panel2')
+      this.classList.add('panel1')
+    })
   }
 
   playPrevSong() {

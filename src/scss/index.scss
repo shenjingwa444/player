@@ -54,19 +54,19 @@ $color3: #0025f1;
     }
   }
 
-  .content {
+  .panels {
     height: calc(100vh - 270px);
     width: 200vw;
     display: flex;
     transition: transform 0.3s;
     align-items: center;
-
+    //overflow: hidden;
     &.panel1 {
       transform: translate(0vw)
     }
 
     &.panel2 {
-      transform: translate(-100vw)
+      transform: translateX(-100vw)
     }
 
     .panel-effect {
@@ -125,6 +125,9 @@ $color3: #0025f1;
           }
         }
       }
+    }
+
+    .panel-lyrics{
     }
 
   }
