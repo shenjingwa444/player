@@ -1,8 +1,6 @@
 import "./icons"
 import Swiper from "./swiper"
 
-const $ = selector => document.querySelector(selector)
-const $$ = selector => document.querySelectorAll(selector)
 
 class Player {
   constructor(node) {
@@ -12,6 +10,8 @@ class Player {
     this.songList = []
     this.currentIndex = 0
     this.audio = new Audio()
+    this.lyricsArr = []
+    this.lyricIndex = -1
     this.start()
     this.bind()
   }
@@ -38,6 +38,7 @@ class Player {
         this.classList.add("play")
         this.querySelector("use").setAttribute("xlink:href", "#icon-pause")
         self.audio.play()
+          .then()
       }
     }
 
@@ -93,11 +94,28 @@ class Player {
   }
 
   locateLyric(){
-
+    let currentTime = this.audio.currentTime*1000
+    let nextLineTime = this.lyricsArr[this.lyricIndex+1][0]
+    if (currentTime > nextLineTime && this.lyricIndex < this.lyricsArr.length - 1) {
+      this.lyricIndex++
+      let node = this.$("[data-time=\"" + this.lyricsArr[this.lyricIndex][0] + "\"]")
+      this.setLineToCenter(node)
+      this.$$(".panel-effect .lyrics p")[0].innerText = this.lyricsArr[this.lyricIndex][1]
+      this.$$(".panel-effect .lyrics p")[1].innerText = this.lyricsArr[this.lyricIndex + 1] ? this.lyricsArr[this.lyricIndex + 1][1] : ""
+    }
   }
 
   setProgressBar(){
+    this.$('.bar .progress').style.width = (this.audio.currentTime * 100 / this.audio.duration) + '%'
+    this.$('.time-start').innerText = this.formateTime(this.audio.currentTime)
+  }
 
+  formateTime(secondsTotal){
+    let minutes = parseInt((secondsTotal/60).toString())
+    minutes = minutes>=10 ? '' + minutes : '0' + minutes
+    let seconds = parseInt((secondsTotal % 60).toString())
+    seconds = seconds >= 10 ? '' + seconds : '0' + seconds
+    return minutes + ':' + seconds
   }
 
   setLyrics(lyrics) {
@@ -145,7 +163,7 @@ class Player {
     offset = offset > 0 ? offset : 0
     this.$(".container").style.transform = `translateY(-${offset}px)`
     this.$$(".container p").forEach(p => p.classList.remove("current"))
-    node.style.classList.add("current")
+    node.classList.add("current")
   }
 
 
