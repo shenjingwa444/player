@@ -188,9 +188,17 @@ var $$ = function $$(selector) {
 
 var Player = function () {
   function Player(node) {
+    var _this = this;
+
     _classCallCheck(this, Player);
 
-    this.root = typeof node === "string" ? $(node) : node;
+    this.root = typeof node === "string" ? document.querySelector(node) : node;
+    this.$ = function (selector) {
+      return _this.root.querySelector(selector);
+    };
+    this.$$ = function (selector) {
+      return _this.root.querySelectorAll(selector);
+    };
     this.songList = [];
     this.currentIndex = 0;
     this.audio = new Audio();
@@ -201,20 +209,20 @@ var Player = function () {
   _createClass(Player, [{
     key: "start",
     value: function start() {
-      var _this = this;
+      var _this2 = this;
 
       fetch("https://jirengu.github.io/data-mock/huawei-music/music-list.json").then(function (res) {
         return res.json();
       }).then(function (data) {
-        _this.songList = data;
-        _this.audio.src = _this.songList[_this.currentIndex].url;
+        _this2.songList = data;
+        _this2.loadSong();
       });
     }
   }, {
     key: "bind",
     value: function bind() {
       var self = this;
-      this.root.querySelector(".btn-play-pause").onclick = function () {
+      this.$(".btn-play-pause").onclick = function () {
         if (this.classList.contains("play")) {
           self.audio.pause();
           this.classList.remove("play");
@@ -228,47 +236,132 @@ var Player = function () {
         }
       };
 
-      this.root.querySelector('.btn-pre').onclick = function () {
-        self.playPrevSong();
+      this.$(".btn-pre").onclick = function () {
+        self.currentIndex = (self.currentIndex - 1) % self.songList.length;
+        self.loadSong();
+        self.playSong();
       };
 
-      this.root.querySelector('.btn-next').onclick = function () {
-        self.playNextSong();
+      this.$(".btn-next").onclick = function () {
+        self.currentIndex = (self.currentIndex + 1) % self.songList.length;
+        self.loadSong();
+        self.playSong();
       };
 
-      var swiper = new _swiper2.default(this.root.querySelector('.panels'));
-      swiper.on('swipLeft', function () {
-        this.classList.remove('panel1');
-        this.classList.add('panel2');
+      //播放过程中时刻触发 ontimeupdate 方法
+      this.audio.ontimeupdate = function () {
+        self.locateLyric();
+        self.setProgressBar();
+      };
+
+      var swiper = new _swiper2.default(this.$(".panels"));
+      swiper.on("swipLeft", function () {
+        this.classList.remove("panel1");
+        this.classList.add("panel2");
       });
-      swiper.on('swipRight', function () {
-        this.classList.remove('panel2');
-        this.classList.add('panel1');
+      swiper.on("swipRight", function () {
+        this.classList.remove("panel2");
+        this.classList.add("panel1");
       });
     }
   }, {
-    key: "playPrevSong",
-    value: function playPrevSong() {
-      var _this2 = this;
-
-      this.currentIndex = (this.currentIndex - 1 + this.songList.length) % this.songList.length;
-      this.audio.src = this.songList[this.currentIndex].url;
-      console.log(this.songList[this.currentIndex]);
-      this.audio.oncanplaythrough = function () {
-        return _this2.audio.play();
-      };
-    }
-  }, {
-    key: "playNextSong",
-    value: function playNextSong() {
+    key: "playSong",
+    value: function playSong() {
       var _this3 = this;
 
-      this.currentIndex = (this.currentIndex + 1 + this.songList.length) % this.songList.length;
-      this.audio.src = this.songList[this.currentIndex].url;
-      console.log(this.songList[this.currentIndex]);
       this.audio.oncanplaythrough = function () {
         return _this3.audio.play();
       };
+    }
+  }, {
+    key: "loadSong",
+    value: function loadSong() {
+      var _this4 = this;
+
+      var songObj = this.songList[this.currentIndex];
+      this.$(".header h1").innerText = songObj.title;
+      this.$(".header p").innerText = songObj.author + "-" + songObj.albumn;
+      this.audio.src = this.songList[this.currentIndex].url;
+      // 获取音乐时长
+      this.audio.onloadedmetadata = function () {
+        return _this4.$('.time-end').innerText = _this4.formateTime(_this4.audio.duration);
+      };
+      this.loadLyrics();
+    }
+  }, {
+    key: "loadLyrics",
+    value: function loadLyrics() {
+      var _this5 = this;
+
+      fetch(this.songList[this.currentIndex].lyric).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        _this5.setLyrics(data.lrc.lyric);
+      });
+    }
+  }, {
+    key: "locateLyric",
+    value: function locateLyric() {}
+  }, {
+    key: "setProgressBar",
+    value: function setProgressBar() {}
+  }, {
+    key: "setLyrics",
+    value: function setLyrics(lyrics) {
+      this.lyricIndex = 0;
+      //创建一个虚拟 DOM，插入到 DOM 树中
+      var fragment = document.createDocumentFragment();
+      var lyricsArr = [];
+      this.lyricsArr = lyricsArr;
+      //根据回车符，将歌词切割成一行一行
+      lyrics.split(/\n/).filter(function (str) {
+        return (
+          //匹配包含时间的那一项:[00:08.23]
+          str.match(/\[.+?\]/)
+        );
+      })
+      //处理每一行的歌词
+      .forEach(function (line) {
+        //将时间替换成 ''，得到歌词 str
+        var str = line.replace(/\[.+?\]/g, "");
+        line.match(/\[.+?\]/g).forEach(function (t) {
+          //将时间的中括号去掉
+          t = t.replace(/[\[\]]/g, "");
+          //将歌曲时间转换成毫秒
+          var milliseconds = parseInt(t.slice(0, 2)) * 60 * 1000 + parseInt(t.slice(3, 5)) * 1000 + parseInt(t.slice(6));
+          lyricsArr.push([milliseconds, str]);
+        });
+      });
+      //歌词根据时间进行排序
+      lyricsArr.sort(function (v1, v2) {
+        if (v1[0] > v2[0]) {
+          return 1;
+        } else {
+          return -1;
+        }
+      })
+      //创建 p 标签，填充歌词和歌曲时长
+      .forEach(function (line) {
+        var node = document.createElement('p');
+        node.setAttribute('data-time', line[0]);
+        node.innerText = line[1];
+        fragment.appendChild(node);
+      });
+      //将虚拟DOM放在 container 中
+      this.$('.panel-lyrics .container').innerHTML = '';
+      this.$('.panel-lyrics .container').appendChild(fragment);
+    }
+  }, {
+    key: "setLineToCenter",
+    value: function setLineToCenter(node) {
+      //歌词容器的偏移量 = 歌词到容器顶部的距离 - 歌词屏幕的一半
+      var offset = node.offsetTop - this.$(".container").offsetHeight / 2;
+      offset = offset > 0 ? offset : 0;
+      this.$(".container").style.transform = "translateY(-" + offset + "px)";
+      this.$$(".container p").forEach(function (p) {
+        return p.classList.remove("current");
+      });
+      node.style.classList.add("current");
     }
   }]);
 
